@@ -2,28 +2,49 @@
 import Link from 'next/link'
 import React from 'react'
 import { usePathname } from 'next/navigation'
-import { AiFillHome, AiOutlineHome, AiFillPlusSquare, AiOutlinePlusSquare } from 'react-icons/ai'
-import { RiSearchFill, RiSearchLine } from 'react-icons/ri'
+import HomeFillIcon from './ui/icons/HomeFillIcon'
+import HomeOutline from './ui/icons/HomeOutlineIcon'
+import SearchFillIcon from './ui/icons/SearchFillIcon'
+import SearchOutlineIcon from './ui/icons/SearchOutlineIcon'
+import NewFillIcon from './ui/icons/NewFillIcon'
+import NewOutlineIcon from './ui/icons/NewOutlineIcon'
+import ColorButton from './ui/ColorButton'
+
+const menu = [
+  {
+    href: '/',
+    icon: <HomeOutline />,
+    clickedIcon: <HomeFillIcon />,
+  },
+  {
+    href: '/search',
+    icon: <SearchOutlineIcon />,
+    clickedIcon: <SearchFillIcon />,
+  },
+  {
+    href: '/new',
+    icon: <NewOutlineIcon />,
+    clickedIcon: <NewFillIcon />,
+  },
+]
 
 export default function Header() {
   const pathname = usePathname()
-  console.log(pathname)
-  const getPathname = (name: string) => {
-    return pathname === name
-  }
 
   return (
-    <header className="flex items-center justify-between border-b border-b-gray-300 p-2 pb-4">
+    <header className="sticky top-0 z-10 flex items-center justify-between border-b border-b-gray-300">
       <Link href={'/'}>
-        <h1 className="text-3xl font-bold">Instagram</h1>
+        <h1 className="text-2xl font-bold sm:text-3xl">Instagram</h1>
       </Link>
-      <nav className="flex items-center gap-4">
-        <Link href={'/'}>{getPathname('/') ? <AiFillHome size={24} /> : <AiOutlineHome size={24} />}</Link>
-        <Link href={'/search'}>{getPathname('/search') ? <RiSearchFill size={24} /> : <RiSearchLine size={24} />}</Link>
-        <Link href={'/new'}>{getPathname('/new') ? <AiFillPlusSquare size={24} /> : <AiOutlinePlusSquare size={24} />}</Link>
-        <button className="instagram-gradient box-border rounded-lg p-[3px]">
-          <div className="rounded-md bg-slate-100 bg-opacity-90 p-[6px]">Sign in</div>
-        </button>
+      <nav>
+        <ul className="flex items-center gap-3 p-2 pr-0 sm:gap-4 sm:p-4">
+          {menu.map((item) => (
+            <li key={item.href}>
+              <Link href={item.href}>{pathname === item.href ? item.clickedIcon : item.icon}</Link>
+            </li>
+          ))}
+          <ColorButton text="Sign in" onClick={() => {}} />
+        </ul>
       </nav>
     </header>
   )

@@ -7,6 +7,30 @@ html, body {
   overflow-x: hidden;
 }
 
+ul,
+ol, 
+li {
+  list-style: none;
+}
+
+/* Remove default hyperlink styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Reset form elements */
+input,
+textarea,
+button,
+select {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .instagram-gradient {
   background-image: linear-gradient(to right, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
 }
