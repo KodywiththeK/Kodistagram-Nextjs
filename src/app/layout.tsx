@@ -1,5 +1,6 @@
 import './globals.css'
 import { Open_Sans } from 'next/font/google'
+import Header from '@/components/Header'
 
 const openSans = Open_Sans({ subsets: ['latin'] })
 
@@ -10,8 +11,11 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={openSans.className}>{children}</body>
+    <html lang="en" className="bg-[#fafafa] text-gray-900 dark:bg-[#0a0a0a] dark:text-gray-200">
+      <body className={`${openSans.className} mx-auto flex h-screen w-full max-w-screen-xl flex-col overflow-y-auto p-2`}>
+        <Header />
+        <main className="grow">{children}</main>
+      </body>
     </html>
   )
 }
