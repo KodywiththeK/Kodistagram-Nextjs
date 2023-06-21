@@ -9,6 +9,9 @@ import SearchOutlineIcon from './ui/icons/SearchOutlineIcon'
 import NewFillIcon from './ui/icons/NewFillIcon'
 import NewOutlineIcon from './ui/icons/NewOutlineIcon'
 import ColorButton from './ui/ColorButton'
+import { useSession, signIn, signOut } from 'next-auth/react'
+import Image from 'next/image'
+import Avatar from './Avatar'
 
 const menu = [
   {
@@ -30,6 +33,8 @@ const menu = [
 
 export default function Header() {
   const pathname = usePathname()
+  const { data: session } = useSession()
+  console.log(session)
 
   return (
     <header className="sticky top-0 z-10 flex items-center justify-between border-b border-b-gray-300">
@@ -43,7 +48,16 @@ export default function Header() {
               <Link href={item.href}>{pathname === item.href ? item.clickedIcon : item.icon}</Link>
             </li>
           ))}
-          <ColorButton text="Sign in" onClick={() => {}} />
+          {session ? (
+            <li className="flex items-center">
+              <Avatar userInfo={session.user} />
+              <ColorButton text="Sign out" onClick={() => signOut()} />
+            </li>
+          ) : (
+            <li>
+              <ColorButton text="Sign in" onClick={() => signIn()} />
+            </li>
+          )}
         </ul>
       </nav>
     </header>
