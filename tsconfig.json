@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "sanity-studio/schemas/post.js", "sanity-studio/schemas/user.ㅓㄴ"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "sanity-studio/schemas/post.js", "sanity-studio/schemas/user.ㅓㄴ", "sanity-studio/sanity.js"],
   "exclude": ["node_modules"]
 }
