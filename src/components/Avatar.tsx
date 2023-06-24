@@ -5,16 +5,18 @@ import React from 'react'
 type Props = {
   userInfo: {
     email: string
-    image: string
+    image?: string
     name: string
     username: string
   }
+  size?: number
+  highlight?: boolean
 }
 
-export default function Avatar({ userInfo }: Props) {
+export default function Avatar({ userInfo, size = 40, highlight = true }: Props) {
   return (
     <Link href={`/${userInfo.username}`}>
-      <Image src={userInfo?.image!} alt="profile" width={35} height={35} className="instagram-gradient mr-2 box-border h-[30px] w-[30px] shrink-0 cursor-pointer rounded-full p-[2px] sm:mr-3 sm:h-[35px] sm:w-[35px]" referrerPolicy="no-referrer" />
+      <Image src={userInfo?.image!} alt="profile" width={size} height={size} className={`${highlight ? 'instagram-gradient' : ''} mr-2 box-border h-[${size}px] w-[${size}px] sm:mr-3" referrerPolicy="no-referrer shrink-0 cursor-pointer rounded-full p-[2px]`} />
     </Link>
   )
 }

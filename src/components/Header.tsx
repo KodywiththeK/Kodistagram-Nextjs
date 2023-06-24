@@ -10,7 +10,6 @@ import NewFillIcon from './ui/icons/NewFillIcon'
 import NewOutlineIcon from './ui/icons/NewOutlineIcon'
 import ColorButton from './ui/ColorButton'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import Image from 'next/image'
 import Avatar from './Avatar'
 
 const menu = [
@@ -50,7 +49,7 @@ export default function Header() {
           ))}
           {session ? (
             <li className="flex items-center">
-              <Avatar userInfo={session.user} />
+              <Avatar userInfo={session.user} size={40} highlight={true} />
               <ColorButton text="Sign out" onClick={() => signOut()} />
             </li>
           ) : (

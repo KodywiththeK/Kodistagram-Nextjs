@@ -11,15 +11,14 @@ type Props = {
 
 export default async function SignInPage({ searchParams: { callbackUrl } }: Props) {
   const session = await getServerSession(authOptions)
-  if (!session) {
+  if (session) {
     return {
       redirect: {
         destination: '/',
-        permanent: false,
+        // permanent: false,
       },
     }
   }
-  console.log(session)
 
   const providers = (await getProviders()) ?? {}
 
