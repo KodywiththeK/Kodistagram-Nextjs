@@ -2,6 +2,7 @@ import './globals.css'
 import { Open_Sans } from 'next/font/google'
 import Header from '@/components/Header'
 import { AuthContext } from '@/context/AuthContext'
+import SWRConfigContext from '@/context/SWRConfigContext'
 
 const openSans = Open_Sans({ subsets: ['latin'] })
 
@@ -16,7 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${openSans.className} mx-auto flex h-screen w-full max-w-screen-xl flex-col overflow-y-auto p-2`}>
         <AuthContext>
           <Header />
-          <main className="grow p-2">{children}</main>
+          <main className="grow p-2">
+            <SWRConfigContext>{children}</SWRConfigContext>
+          </main>
         </AuthContext>
       </body>
     </html>

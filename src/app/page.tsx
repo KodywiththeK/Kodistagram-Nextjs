@@ -10,7 +10,7 @@ export default async function HomePage() {
   const session = await getServerSession(authOptions)
   const user = session?.user
 
-  if (!user) redirect('/auth/signin')
+  if (!user) redirect('/api/auth/signin')
 
   return (
     <section className="mx-auto flex w-full max-w-4xl flex-col sm:flex-row">
