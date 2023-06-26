@@ -36,7 +36,7 @@ export default function Header() {
   console.log(session)
 
   return (
-    <header className="sticky top-0 z-10 flex items-center justify-between border-b border-b-gray-300">
+    <header className="sticky top-0 z-10 flex items-center justify-between border-b border-b-gray-300 bg-white">
       <Link href={'/'}>
         <h1 className="text-2xl font-bold sm:text-3xl">Instagram</h1>
       </Link>
@@ -48,8 +48,8 @@ export default function Header() {
             </li>
           ))}
           {session ? (
-            <li className="flex items-center">
-              <Avatar userInfo={session.user} size={40} highlight={true} />
+            <li className="flex items-center gap-2 sm:gap-3">
+              <Avatar username={session.user.username} image={session.user.image} size={40} highlight={true} />
               <ColorButton text="Sign out" onClick={() => signOut()} />
             </li>
           ) : (

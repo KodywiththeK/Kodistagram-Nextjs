@@ -17,6 +17,10 @@ const nextConfig = {
         protocol: 'http',
         hostname: 'k.kakaocdn.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
 }

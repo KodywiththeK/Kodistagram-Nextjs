@@ -8,9 +8,9 @@ type Props = {
 
 export default function SideBar({ user }: Props) {
   return (
-    <div className="w-full sm:fixed sm:w-1/4">
+    <div className="w-full">
       <div className="mt-4 flex items-center gap-2">
-        {user.image && <Avatar userInfo={user} size={65} highlight={false} />}
+        <Avatar username={user.username} image={user.image} size={65} highlight={false} />
         <div>
           <p className="font-bold">{user.username}</p>
           <p className="leading-4 text-neutral-500">{user.name}</p>

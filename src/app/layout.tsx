@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${openSans.className} mx-auto flex h-screen w-full max-w-screen-xl flex-col overflow-y-auto p-2`}>
         <AuthContext>
           <Header />
-          <main className="grow p-2">
+          <main className="flex min-h-full w-full justify-center bg-neutral-50 p-2">
             <SWRConfigContext>{children}</SWRConfigContext>
           </main>
         </AuthContext>
