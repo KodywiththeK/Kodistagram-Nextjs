@@ -36,7 +36,7 @@ export default function Header() {
   console.log(session)
 
   return (
-    <header className="sticky top-0 z-10 flex items-center justify-between border-b border-b-gray-300 bg-white">
+    <header className="sticky top-0 z-10 flex items-center justify-between border-b border-b-gray-300 bg-white pt-4 sm:pt-2">
       <Link href={'/'}>
         <h1 className="text-2xl font-bold sm:text-3xl">Instagram</h1>
       </Link>

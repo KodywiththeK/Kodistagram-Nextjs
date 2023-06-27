@@ -13,8 +13,8 @@ export default function FollowingBar() {
   // 3. 백엔드에서 사용자의 상세 정보를 Sanity 에서 가지고 옴
   // 4. 클라이언트 컴포넌트에서 followings의 정보를 UI로 보여주기
   const { data, isLoading: Loading, error } = useSWR<DetailUser>('/api/me')
-  // const users = data?.following
-  const users = data?.following && [...data.following, ...data.following, ...data.following, ...data.following, ...data.following]
+  console.log(data)
+  const users = data?.following && [...data.following, ...data.following]
   // const users = undefined as undefined | DetailUser[]
 
   return (
@@ -23,12 +23,12 @@ export default function FollowingBar() {
       {users && users.length > 0 && (
         <ScrollableBar>
           {users.map(({ image, username }, idx) => (
-            <li key={idx} className={'flex w-20 shrink-0 flex-col items-center justify-center'}>
+            <div key={idx} className={'flex w-20 shrink-0 flex-col items-center justify-center'}>
               <Avatar username={username} image={image} size={65} />
               <Link href={`/user/${username}`}>
                 <p className="w-full overflow-hidden text-ellipsis text-center text-sm">{username}</p>
               </Link>
-            </li>
+            </div>
           ))}
         </ScrollableBar>
       )}

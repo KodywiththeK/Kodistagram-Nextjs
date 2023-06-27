@@ -14,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="bg-[#fafafa] text-gray-900 dark:bg-[#0a0a0a] dark:text-gray-200">
-      <body className={`${openSans.className} mx-auto flex h-screen w-full max-w-screen-xl flex-col overflow-y-auto p-2`}>
+      <body className={`${openSans.className} mx-auto flex h-screen w-full max-w-screen-xl flex-col overflow-y-auto px-2`}>
         <AuthContext>
           <Header />
           <main className="flex min-h-full w-full justify-center bg-neutral-50 p-2">
