@@ -23,7 +23,7 @@ export default async function SignInPage({ searchParams: { callbackUrl } }: Prop
   const providers = (await getProviders()) ?? {}
 
   return (
-    <div className="flex h-full items-center justify-center">
+    <div className="flex items-center justify-center">
       <SocialSigninButton providers={providers} callbackUrl={callbackUrl ?? '/'} />
     </div>
   )
