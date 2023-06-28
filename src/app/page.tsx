@@ -13,12 +13,12 @@ export default async function HomePage() {
   if (!user) redirect('/api/auth/signin')
 
   return (
-    <section className="mx-auto flex w-full max-w-[850px] flex-col justify-between sm:flex-row">
+    <section className="mx-auto flex w-full flex-col justify-between sm:flex-row">
       <div className="w-full min-w-0 basis-3/4 sm:pr-6">
         <FollowingBar />
         <PostList />
       </div>
-      <div className="w-full shrink-0 basis-1/4">
+      <div className="relative w-full shrink-0 basis-1/4">
         <SideBar user={user} />
       </div>
     </section>

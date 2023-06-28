@@ -18,7 +18,7 @@ export default function FollowingBar() {
   // const users = undefined as undefined | DetailUser[]
 
   return (
-    <section className="mb-4 flex min-h-[90px] w-full items-center justify-center rounded-lg p-4 shadow-md shadow-neutral-300">
+    <section className="relative z-0 mx-auto mb-4 flex min-h-[90px] w-full max-w-[800px] items-center justify-center rounded-lg p-4 shadow-md shadow-neutral-300">
       {Loading ? <PropagateLoader size={8} color="red" /> : (!users || users.length === 0) && <p>{`You don't have following`}</p>}
       {users && users.length > 0 && (
         <ScrollableBar>
