@@ -16,15 +16,13 @@ const simplePostProjection = `
 `
 
 export async function getFollowingPosts(username: string) {
-  return client
-    .fetch(
-      `
-    *[_type == "post" && author->username == "${username}" 
-      || author._ref in *[_type=="user" && username=="${username}"].following[]._ref]
-      | order(_createdAt desc){${simplePostProjection}}
-    `
-    )
-    .then((posts) => posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) })))
+  const query = `
+  *[_type == "post" && author->username == "${username}" 
+    || author._ref in *[_type=="user" && username=="${username}"].following[]._ref]
+    | order(_createdAt desc) {${simplePostProjection}}
+  `
+  const result = await client.fetch(query).then((posts) => posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) })))
+  return result
 }
 
 export async function getPost(id: string) {

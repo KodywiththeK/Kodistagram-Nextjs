@@ -37,3 +37,13 @@ export async function getUserByUsername(username: string) {
     `
   )
 }
+
+export async function getSearchUser(keyword?: string) {
+  const query = keyword ? `&& username == "${keyword}" || name == "${keyword}"` : ''
+  return client.fetch(`
+    *[_type == "user" ${query}]{
+      image, name, username,
+      "following":count(following), "followers":count(followers)
+    }
+  `)
+}

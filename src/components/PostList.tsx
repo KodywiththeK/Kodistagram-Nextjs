@@ -6,8 +6,8 @@ import PostListCard from './PostListCard'
 import GridSpinner from './ui/GridSpinner'
 
 export default function PostList() {
-  const { data: posts, isLoading: Loading, error } = useSWR<SimplePost[]>('/api/posts')
-  console.log(posts)
+  const { data: posts, isLoading: Loading } = useSWR<SimplePost[]>(`/api/posts`)
+
   return (
     <section>
       {Loading && (
@@ -15,11 +15,10 @@ export default function PostList() {
           <GridSpinner color="red" />
         </div>
       )}
-
       {posts && (
         <ul className="flex flex-col items-center">
           {posts.map((post, index) => (
-            <li key={post.id} className="mb-4">
+            <li key={index} className="mb-4">
               <PostListCard post={post} priority={index < 2} />
             </li>
           ))}
