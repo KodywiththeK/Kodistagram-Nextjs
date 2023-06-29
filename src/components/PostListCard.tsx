@@ -8,6 +8,7 @@ import PostActionBar from './PostActionBar'
 import ModalPortal from './ui/ModalPortal'
 import PostModal from './PostModal'
 import PostDetail from './PostDetail'
+import Link from 'next/link'
 
 type Props = {
   post: SimplePost
@@ -22,7 +23,9 @@ export default function PostListCard({ post, priority = false }: Props) {
     <article className=" max-w-lg rounded border border-gray-200 shadow-lg">
       <div className="flex items-center gap-2 p-2">
         <Avatar username={username} image={userImage} highlight size={45} />
-        <span className="font-bold text-gray-900">{username}</span>
+        <Link href={`/user/${username}`}>
+          <span className="font-bold text-gray-900">{username}</span>
+        </Link>
       </div>
       <Image src={image} alt={`photo by ${username}`} width={800} height={800} className="aspect-square cursor-pointer object-cover" priority={priority} onClick={() => setOpenModal(true)} />
       <PostActionBar username={username} likes={likes} createdAt={createdAt} text={text} onClick={setOpenModal} />

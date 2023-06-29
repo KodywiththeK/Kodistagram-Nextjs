@@ -1,6 +1,6 @@
 'use client'
 import useDebounce from '@/hooks/debounce'
-import { UserSearchResult } from '@/model/user'
+import { SearchUser } from '@/model/user'
 import React, { FormEvent, useState } from 'react'
 import { BeatLoader } from 'react-spinners'
 import useSWR from 'swr'
@@ -10,7 +10,7 @@ import UserCard from './UserCard'
 export default function InputSearch() {
   const [inputValue, setInputValue] = useState<string>('')
   const debouncedKeyword = useDebounce(inputValue)
-  const { data, isLoading, error } = useSWR<UserSearchResult[]>(`/api/search/${debouncedKeyword}`)
+  const { data, isLoading, error } = useSWR<SearchUser[]>(`/api/search/${debouncedKeyword}`)
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()

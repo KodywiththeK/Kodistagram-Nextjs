@@ -41,3 +41,13 @@ export async function getPost(id: string) {
     )
     .then((post) => ({ ...post, image: urlFor(post.image) }))
 }
+
+export async function getUserPosts(username: string) {
+  const query = `
+  *[_type == "post" && author->username == "${username}" && "${username}" == likes[].username
+    || author._ref in *[_type=="user" && username=="${username}"].following[]._ref]
+    | order(_createdAt desc) {${simplePostProjection}}
+  `
+  const result = await client.fetch(query).then((posts) => posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) })))
+  return result
+}

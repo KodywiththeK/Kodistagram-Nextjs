@@ -1,9 +1,9 @@
-import { User } from '@/model/user'
+import { AuthUser } from '@/model/user'
 import React from 'react'
 import Avatar from './Avatar'
 
 type Props = {
-  user: User
+  user: AuthUser
 }
 
 export default function SideBar({ user }: Props) {
