@@ -1,3 +1,4 @@
+import { UserSearchResult } from '@/model/user'
 import { client } from './sanity'
 
 type OAuthUser = {
@@ -40,10 +41,20 @@ export async function getUserByUsername(username: string) {
 
 export async function getSearchUser(keyword?: string) {
   const query = keyword ? `&& username == "${keyword}" || name == "${keyword}"` : ''
-  return client.fetch(`
+  return client
+    .fetch(
+      `
     *[_type == "user" ${query}]{
       image, name, username,
       "following":count(following), "followers":count(followers)
     }
-  `)
+  `
+    )
+    .then((users) =>
+      users.map((user: UserSearchResult) => ({
+        ...user,
+        following: user.following ?? 0,
+        followers: user.followers ?? 0,
+      }))
+    )
 }
