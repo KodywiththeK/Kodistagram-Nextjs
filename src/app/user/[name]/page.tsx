@@ -11,7 +11,6 @@ type Props = {
 }
 
 export default async function UserPage({ params: { name } }: Props) {
-  console.log(name)
   const user = await getUserForProfile(name)
 
   if (!user) {
