@@ -2,6 +2,12 @@ import { getProviders } from 'next-auth/react'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../[...nextauth]/route'
 import SocialSigninButton from '@/components/SocialSigninButton'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Signin',
+  description: 'Signup or Login to InstagramKody',
+}
 
 type Props = {
   searchParams: {
