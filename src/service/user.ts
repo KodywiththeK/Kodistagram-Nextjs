@@ -39,7 +39,7 @@ export async function getUserByUsername(username: string) {
 }
 
 export async function getSearchUser(keyword?: string) {
-  const query = keyword ? `&& username == "${keyword}" || name == "${keyword}"` : ''
+  const query = keyword ? `&& (name match "${keyword}") || (username match "${keyword}")` : ''
   return client
     .fetch(
       `

@@ -16,13 +16,15 @@ const simplePostProjection = `
 `
 
 export async function getFollowingPosts(username: string) {
-  const query = `
-  *[_type == "post" && author->username == "${username}" 
-    || author._ref in *[_type=="user" && username=="${username}"].following[]._ref]
-    | order(_createdAt desc) {${simplePostProjection}}
-  `
-  const result = await client.fetch(query).then(mapPosts)
-  return result
+  return client
+    .fetch(
+      `*[_type =="post" && author->username == "${username}"
+          || author._ref in *[_type == "user" && username == "${username}"].following[]._ref]
+          | order(_createdAt desc){
+          ${simplePostProjection}
+        }`
+    )
+    .then(mapPosts)
 }
 
 export async function getPost(id: string) {
@@ -40,16 +42,6 @@ export async function getPost(id: string) {
     }`
     )
     .then((post) => ({ ...post, image: urlFor(post.image) }))
-}
-
-export async function getUserPosts(username: string) {
-  const query = `
-  *[_type == "post" && author->username == "${username}" && "${username}" == likes[].username
-    || author._ref in *[_type=="user" && username=="${username}"].following[]._ref]
-    | order(_createdAt desc) {${simplePostProjection}}
-  `
-  const result = await client.fetch(query).then((posts) => posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) })))
-  return result
 }
 
 export async function getPostsOf(username: string) {
@@ -84,5 +76,25 @@ export async function getSavedOf(username: string) {
 }
 
 function mapPosts(posts: SimplePost[]) {
-  return posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image) }))
+  return posts.map((post: SimplePost) => ({ ...post, image: urlFor(post.image), likes: post.likes ?? [] }))
+}
+
+export async function likePost(postId: string, userId: string) {
+  return client
+    .patch(postId) //
+    .setIfMissing({ likes: [] })
+    .append('likes', [
+      {
+        _ref: userId,
+        _type: 'reference',
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true })
+}
+
+export async function dislikePost(postId: string, userId: string) {
+  return client
+    .patch(postId)
+    .unset([`likes[_ref=="${userId}"]`])
+    .commit()
 }

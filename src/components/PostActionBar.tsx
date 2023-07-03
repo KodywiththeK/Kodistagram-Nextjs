@@ -1,37 +1,41 @@
+import { useState } from 'react'
+import ToggleButton from './ui/ToggleButton'
+import { SimplePost } from '@/model/post'
+import { useSession } from 'next-auth/react'
+import { useSWRConfig } from 'swr'
+import HeartFill from './ui/icons/HeartFill'
+import BookmarkFill from './ui/icons/BookmarkFill'
+import BookmarkOutline from './ui/icons/BookmarkOutline'
+import HeartOutline from './ui/icons/HeartOutline'
 import { parseDate } from '@/util/parseDate'
-import React from 'react'
-import { AiOutlineHeart } from 'react-icons/ai'
-import { BsBookmark } from 'react-icons/bs'
-
+import usePosts from '@/hooks/posts'
 type Props = {
-  username: string
-  likes: string[]
-  text?: string
-  createdAt: string
-  onClick?: (x: boolean) => void
+  post: SimplePost
 }
+export default function ActionBar({ post }: Props) {
+  const { id, likes, username, text, createdAt } = post
+  const { data: session } = useSession()
+  const user = session?.user
+  const liked = user !== undefined ? likes.includes(user.username) : false
+  console.log(liked)
+  const [bookmarked, setBookmarked] = useState(false)
+  const { setLike } = usePosts()
+  const handleLike = (like: boolean) => {
+    if (user) setLike(post, user.username, like)
+  }
 
-export default function PostActionBar({ username, likes, text, createdAt, onClick }: Props) {
   return (
     <>
-      <div className="flex justify-between p-2">
-        <div className="flex items-center gap-2">
-          <button>
-            <AiOutlineHeart size={22} />
-          </button>
-          <p className="text-sm font-bold ">{`${likes?.length ?? 0} ${likes?.length > 1 ? 'likes' : 'like'}`}</p>
-        </div>
-        <button>
-          <BsBookmark size={20} />
-        </button>
+      <div className="my-2 flex justify-between px-4">
+        <ToggleButton toggled={liked} onToggle={() => handleLike(!liked)} onIcon={<HeartFill />} offIcon={<HeartOutline size={22} />} />
+        <ToggleButton toggled={bookmarked} onToggle={() => setBookmarked(!bookmarked)} onIcon={<BookmarkFill />} offIcon={<BookmarkOutline size={20} />} />
       </div>
-      <div className="px-2 py-1 text-sm">
+      <div className="px-4 py-1">
+        <p className="mb-2 text-sm font-bold">{`${likes?.length ?? 0} ${likes?.length > 1 ? 'likes' : 'like'}`}</p>
         {text && (
-          <p className="flex gap-1.5">
-            <span className="font-bold">{username}</span>
-            <span onClick={() => onClick && onClick(true)} className="cursor-pointer">
-              {text}
-            </span>
+          <p>
+            <span className="mr-1 font-bold">{username}</span>
+            {text}
           </p>
         )}
         <p className="my-2 text-xs uppercase text-neutral-500">{parseDate(createdAt)}</p>

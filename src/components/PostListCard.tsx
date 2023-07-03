@@ -28,7 +28,7 @@ export default function PostListCard({ post, priority = false }: Props) {
         </Link>
       </div>
       <Image src={image} alt={`photo by ${username}`} width={800} height={800} className="aspect-square cursor-pointer object-cover" priority={priority} onClick={() => setOpenModal(true)} />
-      <PostActionBar username={username} likes={likes} createdAt={createdAt} text={text} onClick={setOpenModal} />
+      <PostActionBar post={post} />
       <CommentForm />
       {openModal && (
         <ModalPortal>
