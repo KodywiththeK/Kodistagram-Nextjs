@@ -8,8 +8,9 @@ import PostActionBar from './PostActionBar'
 
 type Props = {
   post: SimplePost
+  onClick: () => void
 }
-export default function PostDetail({ post }: Props) {
+export default function PostDetail({ post, onClick }: Props) {
   const { id, userImage, username, image, createdAt, likes } = post
   const { data, isLoading } = useSWR<FullPost>(`/api/posts/${id}`)
   const comments = data?.comments
@@ -46,8 +47,8 @@ export default function PostDetail({ post }: Props) {
               </li>
             ))}
         </ul>
-        <PostActionBar post={post} />
-        <CommentForm />
+        <PostActionBar post={post} onClick={onClick} fullComments={true} />
+        <CommentForm postId={post.id} />
       </div>
     </section>
   )

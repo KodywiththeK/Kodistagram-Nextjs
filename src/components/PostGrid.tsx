@@ -11,7 +11,6 @@ type Props = {
 
 export default function PostGrid({ username, query }: Props) {
   const { data: posts, isLoading, error } = useSWR<SimplePost[]>(`/api/users/${username}/${query}`)
-  console.log(posts)
   return (
     <div className="relative aspect-square w-full">
       {isLoading && (

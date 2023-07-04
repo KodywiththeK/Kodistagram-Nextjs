@@ -11,9 +11,11 @@ import useUserInfo from '@/hooks/userInfo'
 
 type Props = {
   post: SimplePost
+  onClick: () => void
+  fullComments: boolean
 }
-export default function PostActionBar({ post }: Props) {
-  const { likes, username, text, createdAt } = post
+export default function PostActionBar({ post, onClick, fullComments }: Props) {
+  const { likes, username, text, createdAt, commentCount } = post
   const { data: session } = useSession()
   const user = session?.user
 
@@ -37,14 +39,15 @@ export default function PostActionBar({ post }: Props) {
         <ToggleButton toggled={liked} onToggle={() => handleLike(!liked)} onIcon={<HeartFill />} offIcon={<HeartOutline size={22} />} />
         <ToggleButton toggled={bookmarked} onToggle={() => handleBookmark(!bookmarked)} onIcon={<BookmarkFill />} offIcon={<BookmarkOutline size={20} />} />
       </div>
-      <div className="px-4 py-1">
-        <p className="mb-2 text-sm font-bold">{`${likes?.length ?? 0} ${likes?.length > 1 ? 'likes' : 'like'}`}</p>
-        {text && (
+      <div className="flex flex-col gap-1 px-4 py-1">
+        <p className="text-sm font-bold">{`${likes?.length ?? 0} ${likes?.length > 1 ? 'likes' : 'like'}`}</p>
+        {text && !fullComments && (
           <p>
             <span className="mr-1 font-bold">{username}</span>
             {text}
           </p>
         )}
+        {!fullComments && commentCount > 1 && <p onClick={onClick} className="cursor-pointer text-sm font-semibold text-sky-600">{`View ${commentCount - 1} more comment${commentCount - 1 > 1 ? 's' : ''}`}</p>}
         <p className="my-2 text-xs uppercase text-neutral-500">{parseDate(createdAt)}</p>
       </div>
     </>
