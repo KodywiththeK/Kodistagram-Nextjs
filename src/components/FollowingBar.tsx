@@ -1,20 +1,18 @@
 'use client'
-import { HomeUser } from '@/model/user'
 import React from 'react'
-import useSWR from 'swr'
 import { PropagateLoader } from 'react-spinners'
 import Avatar from './Avatar'
 import ScrollableBar from './ui/ScrollableBar'
 import Link from 'next/link'
+import useUserInfo from '@/hooks/userInfo'
 
 export default function FollowingBar() {
   // 1. 클라이언트 컴포넌트에서 백엔드에게 api/me를 통해 사용자의 정보를 얻어옴
   // 2. 백엔드에서는 현재 로그인된 사용자의 세션 정보를 이용해서
   // 3. 백엔드에서 사용자의 상세 정보를 Sanity 에서 가지고 옴
   // 4. 클라이언트 컴포넌트에서 followings의 정보를 UI로 보여주기
-  const { data, isLoading: Loading, error } = useSWR<HomeUser>('/api/me')
-  console.log(data)
-  const users = data?.following && [...data.following, ...data.following]
+  const { userInfo, isLoading: Loading, error } = useUserInfo()
+  const users = userInfo?.following
   // const users = undefined as undefined | DetailUser[]
 
   return (

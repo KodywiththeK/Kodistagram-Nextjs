@@ -33,7 +33,6 @@ const menu = [
 export default function Header() {
   const pathname = usePathname()
   const { data: session } = useSession()
-  console.log(session)
 
   return (
     <header className="sticky top-0 z-10 mx-auto flex w-full max-w-screen-xl items-center justify-between rounded border-b border-b-gray-300 bg-white px-2 pt-4 shadow-sm sm:pt-2">
