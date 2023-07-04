@@ -12,7 +12,7 @@ export default function PostModal({ onClose, children }: Props) {
       <button onClick={onClose} className="fixed right-8 top-8 p-2 opacity-100">
         <AiOutlineClose color="white" size={24} />
       </button>
-      <div className="sm:3/5 h-4/5 w-4/5 max-w-7xl rounded bg-white py-2">{children}</div>
+      <div className="sm:3/5 relative h-4/5 w-4/5 max-w-7xl rounded bg-white py-2">{children}</div>
     </section>
   )
 }

@@ -16,7 +16,7 @@ type Props = {
 }
 
 export default function PostListCard({ post, priority = false }: Props) {
-  const { userImage, username, image } = post
+  const { userImage, username, image, text, commentCount } = post
   const [openModal, setOpenModal] = useState(false)
 
   return (
@@ -28,13 +28,20 @@ export default function PostListCard({ post, priority = false }: Props) {
         </Link>
       </div>
       <Image src={image} alt={`photo by ${username}`} width={800} height={800} className="aspect-square cursor-pointer object-cover" priority={priority} onClick={() => setOpenModal(true)} />
-      <PostActionBar post={post} onClick={() => setOpenModal(true)} fullComments={false} />
+      <PostActionBar post={post} isModal={openModal}>
+        {text && (
+          <p>
+            <span className="mr-1 font-bold">{username}</span>
+            {text}
+          </p>
+        )}
+        {commentCount > 1 && <button onClick={() => setOpenModal(true)} className="cursor-pointer text-start text-sm font-semibold text-sky-600">{`View all ${commentCount} comments`}</button>}
+      </PostActionBar>
 
-      <CommentForm postId={post.id} />
       {openModal && (
         <ModalPortal>
           <PostModal onClose={() => setOpenModal(false)}>
-            <PostDetail post={post} onClick={() => setOpenModal(true)} />
+            <PostDetail post={post} />
           </PostModal>
         </ModalPortal>
       )}

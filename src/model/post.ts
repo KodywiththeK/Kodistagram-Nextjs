@@ -1,7 +1,7 @@
 export type Comment = {
   comment: string
   username: string
-  image: string
+  image?: string | undefined
 }
 
 // FullPost 타입에서 comments 를 빼고, comments를 number 타입으로 추가함
