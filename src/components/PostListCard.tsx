@@ -16,7 +16,7 @@ type Props = {
 }
 
 export default function PostListCard({ post, priority = false }: Props) {
-  const { userImage, username, image, text, commentCount } = post
+  const { userImage, username, image, text, commentCount, likes } = post
   const [openModal, setOpenModal] = useState(false)
 
   return (

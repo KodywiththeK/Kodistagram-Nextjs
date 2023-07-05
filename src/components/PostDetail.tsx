@@ -8,8 +8,9 @@ import PostActionBar from './PostActionBar'
 
 type Props = {
   post: SimplePost
+  query?: string
 }
-export default function PostDetail({ post }: Props) {
+export default function PostDetail({ post, query }: Props) {
   const { userImage, username, image } = post
   const { data, isLoading } = useSinglePost(post.id)
   const comments = data?.comments
@@ -49,7 +50,7 @@ export default function PostDetail({ post }: Props) {
               ))}
             <div ref={endRef}></div>
           </ul>
-          <PostActionBar post={post} isModal={true} />
+          <PostActionBar post={post} isModal={true} query={query && query} />
         </div>
       </div>
     </section>

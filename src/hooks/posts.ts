@@ -2,7 +2,7 @@ import { FullPost, SimplePost } from '@/model/post'
 import { useCallback } from 'react'
 import useSWR from 'swr'
 
-async function updateLike(id: string, like: boolean) {
+export async function updateLike(id: string, like: boolean) {
   return fetch('/api/likes', {
     method: 'PUT',
     body: JSON.stringify({ id: id, like: like }),

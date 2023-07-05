@@ -1,3 +1,4 @@
+import usePosts from '@/hooks/posts'
 import { SimplePost } from '@/model/post'
 import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -9,16 +10,20 @@ import ModalPortal from './ui/ModalPortal'
 type Props = {
   post: SimplePost
   priority: boolean
+  query: string
 }
 
-export default function PostGridCard({ post, priority = false }: Props) {
-  const { username, image } = post
+export default function PostGridCard({ post, priority = false, query }: Props) {
+  const { username, image, id } = post
   const [openModal, setOpenModal] = useState(false)
   const { data: session } = useSession()
   const handleOpenPost = () => {
     if (!session?.user) return signIn()
     setOpenModal(true)
   }
+  // const { posts } = usePosts()
+  // console.log(posts)
+  // const data = posts?.find((p) => p.id == id)
 
   return (
     <div className="relative aspect-square w-full">
@@ -26,7 +31,7 @@ export default function PostGridCard({ post, priority = false }: Props) {
       {openModal && (
         <ModalPortal>
           <PostModal onClose={() => setOpenModal(false)}>
-            <PostDetail post={post} />
+            <PostDetail post={post} query={query} />
           </PostModal>
         </ModalPortal>
       )}
