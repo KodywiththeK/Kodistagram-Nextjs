@@ -15,34 +15,18 @@ type Props = {
   post: SimplePost
   children?: React.ReactNode
   isModal: boolean
-  query?: string
 }
-export default function PostActionBar({ post, children, isModal = false, query }: Props) {
+export default function PostActionBar({ post, children, isModal = false }: Props) {
   const { likes, createdAt, id } = post
   const { data: session } = useSession()
   const user = session?.user
 
-  // 예외사항 대응
-  const { data: queryPosts, mutate } = useSWR<SimplePost[]>(`/api/users/${user?.username}/${query}`)
-
   // 좋아요
   const liked = user !== undefined ? likes.includes(user.username) : false
   const { setLike } = usePosts()
-  const handleLike = async (like: boolean) => {
+  const handleLike = (like: boolean) => {
     if (user) {
-      if (query !== undefined) {
-        const newPost = {
-          ...post,
-          likes: like ? [...post.likes, user.username] : post.likes.filter((item) => item !== user.username),
-        }
-        const newPostList = queryPosts?.map((p) => (p.id === post.id ? newPost : p))
-        mutate(updateLike(id, like), {
-          optimisticData: newPostList,
-          populateCache: false,
-          revalidate: false,
-          rollbackOnError: true,
-        })
-      } else await setLike(post, user.username, like)
+      setLike(post, user.username, like)
     }
   }
 

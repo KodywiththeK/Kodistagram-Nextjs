@@ -10,10 +10,9 @@ import ModalPortal from './ui/ModalPortal'
 type Props = {
   post: SimplePost
   priority: boolean
-  query: string
 }
 
-export default function PostGridCard({ post, priority = false, query }: Props) {
+export default function PostGridCard({ post, priority = false }: Props) {
   const { username, image, id } = post
   const [openModal, setOpenModal] = useState(false)
   const { data: session } = useSession()
@@ -31,7 +30,7 @@ export default function PostGridCard({ post, priority = false, query }: Props) {
       {openModal && (
         <ModalPortal>
           <PostModal onClose={() => setOpenModal(false)}>
-            <PostDetail post={post} query={query} />
+            <PostDetail post={post} />
           </PostModal>
         </ModalPortal>
       )}

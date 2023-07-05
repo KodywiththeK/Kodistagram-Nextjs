@@ -1,4 +1,5 @@
 'use client'
+import { CacheKeysContext } from '@/context/CacheKeysContext'
 import { ProfileUser } from '@/model/user'
 import React, { useState } from 'react'
 import useSWR from 'swr'
@@ -33,7 +34,9 @@ export default function UserPosts({ user: { username } }: Props) {
           </li>
         ))}
       </ul>
-      <PostGrid username={username} query={query} />
+      <CacheKeysContext.Provider value={{ postsKey: `/api/users/${username}/${query}` }}>
+        <PostGrid />
+      </CacheKeysContext.Provider>
     </section>
   )
 }

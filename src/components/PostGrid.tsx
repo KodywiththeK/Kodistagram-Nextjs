@@ -1,20 +1,19 @@
+import { useCacheKeys } from '@/context/CacheKeysContext'
+import usePosts from '@/hooks/posts'
 import { SimplePost } from '@/model/post'
 import React from 'react'
 import useSWR from 'swr'
 import PostGridCard from './PostGridCard'
 import GridSpinner from './ui/GridSpinner'
 
-type Props = {
-  username: string
-  query: string
-}
-
-export default function PostGrid({ username, query }: Props) {
-  const { data: posts, isLoading, error } = useSWR<SimplePost[]>(`/api/users/${username}/${query}`)
+export default function PostGrid() {
+  const key = useCacheKeys()
+  const { posts, postLoading } = usePosts()
+  // const { data: posts, isLoading, error } = useSWR<SimplePost[]>(`/api/users/${username}/${query}`)
 
   return (
     <div className="relative aspect-square w-full">
-      {isLoading && (
+      {postLoading && (
         <div className="my-8 flex w-full justify-center">
           <GridSpinner />
         </div>
@@ -23,7 +22,7 @@ export default function PostGrid({ username, query }: Props) {
         {posts &&
           posts.map((post, index) => (
             <li key={post.id}>
-              <PostGridCard post={post} query={query} priority={index < 6} />
+              <PostGridCard post={post} priority={index < 6} />
             </li>
           ))}
       </ul>
