@@ -1,16 +1,10 @@
 import Avatar from '@/components/Avatar'
 import CreateNewPost from '@/components/CreateNewPost'
 import { getPost } from '@/service/posts'
-import { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import { authOptions } from '../../api/auth/[...nextauth]/route'
-
-export const metatdata: Metadata = {
-  title: 'Edit Post',
-  description: 'Edit post',
-}
 
 type Props = {
   params: {
