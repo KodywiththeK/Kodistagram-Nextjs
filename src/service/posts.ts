@@ -158,7 +158,7 @@ export async function deletePost(postId: string) {
     })
 }
 
-export async function EditPost(userId: string, text: string, file: Blob, postId: string) {
+export async function EditPost(text: string, file: Blob, postId: string) {
   return fetch(assetsURL, {
     method: 'POST',
     headers: {
@@ -174,22 +174,8 @@ export async function EditPost(userId: string, text: string, file: Blob, postId:
         .patch(postId)
         .set({
           photo: { asset: { _ref: result.document._id } },
+          message: text,
         })
         .commit()
-      // return client.createOrReplace(
-      //   {
-      //     _type: 'post',
-      //     _id: postId,
-      //     author: { _ref: userId },
-      //     photo: { asset: { _ref: result.document._id } },
-      //     comments: [
-      //       {
-      //         comment: text,
-      //         author: { _ref: userId, _type: 'reference' },
-      //       },
-      //     ],
-      //   },
-      //   { autoGenerateArrayKeys: true }
-      // )
     })
 }

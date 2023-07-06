@@ -10,7 +10,6 @@ type Props = {
 export default function PickEmoji({ text, setText }: Props) {
   const emojiRef = useRef<HTMLDivElement>(null)
   const [showEmoji, setShowEmoji] = useState(false)
-  const [chosenEmoji, setChosenEmoji] = useState<null | EmojiClickData>(null)
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -28,8 +27,7 @@ export default function PickEmoji({ text, setText }: Props) {
     setShowEmoji(!showEmoji)
   }
   const handleEmojiClick = (object: EmojiClickData) => {
-    setChosenEmoji(object)
-    setText(text + String(chosenEmoji?.emoji))
+    setText(text + object.emoji)
   }
 
   return (

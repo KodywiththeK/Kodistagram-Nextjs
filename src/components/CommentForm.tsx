@@ -17,7 +17,7 @@ export default function CommentForm({ post, isModal }: Props) {
   const { postComment } = usePosts()
   const { postCommentOnSinglePost } = useSinglePost(post.id)
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement | HTMLInputElement>) => {
     e.preventDefault()
     if (user) {
       if (isModal) {
@@ -32,7 +32,7 @@ export default function CommentForm({ post, isModal }: Props) {
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="relative flex w-full items-center justify-between gap-2 border-t border-neutral-300 px-3 py-1">
       <PickEmoji text={comment} setText={setComment} />
-      <input value={comment} required onChange={(e) => setComment(e.target.value)} className="shrink grow rounded p-2 outline-none" type={'text'} placeholder="Add a comment..." />
+      <input onKeyDown={(e) => e.key === 'Enter' && handleSubmit(e)} value={comment} required onChange={(e) => setComment(e.target.value)} className="shrink grow rounded p-2 outline-none" type={'text'} placeholder="Add a comment..." />
       <button disabled={comment.trim().length === 0} className="font-bold text-sky-500 disabled:text-sky-300">
         Post
       </button>

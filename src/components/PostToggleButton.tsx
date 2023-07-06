@@ -25,15 +25,23 @@ export default function PostToggleButton({ username, buttons }: Props) {
         setShowActions(false)
       }
     }
+    const handleScroll = (): void => {
+      setShowActions(false)
+    }
+    window.addEventListener('scroll', handleScroll)
     document.addEventListener('mousedown', handleOutsideClick)
-    return () => document.removeEventListener('mousedown', handleOutsideClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   return (
-    <>
+    <div ref={containerRef}>
       {username === data?.user.username && <BsThreeDots size={22} onClick={handleToggleActions} className=" box-content cursor-pointer p-4" />}
       {showActions && (
-        <div ref={containerRef} className="absolute right-0 top-10 z-0 mt-2 w-[100px] overflow-hidden rounded-lg bg-white shadow-xl">
+        <div className="absolute right-2 top-10 z-10 mt-2 w-[100px] overflow-hidden rounded-lg border-[0.5px] border-gray-300 bg-white shadow-xl">
           {buttons.map(({ name, onClick }) => (
             <button
               key={name}
@@ -48,6 +56,6 @@ export default function PostToggleButton({ username, buttons }: Props) {
           ))}
         </div>
       )}
-    </>
+    </div>
   )
 }

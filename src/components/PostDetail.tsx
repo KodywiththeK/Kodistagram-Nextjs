@@ -5,12 +5,13 @@ import { useEffect, useRef } from 'react'
 import { SyncLoader } from 'react-spinners'
 import Avatar from './Avatar'
 import PostActionBar from './PostActionBar'
+import PostcardHeader from './PostcardHeader'
 
 type Props = {
   post: SimplePost
 }
 export default function PostDetail({ post }: Props) {
-  const { userImage, username, image } = post
+  const { userImage, username, image, text } = post
   const { data, isLoading } = useSinglePost(post.id)
   const comments = data?.comments
   const endRef = useRef<HTMLDivElement | null>(null)
@@ -22,10 +23,7 @@ export default function PostDetail({ post }: Props) {
     <section className="absolute inset-0 flex h-full flex-col justify-between overflow-hidden rounded">
       <div className="flex h-full w-full flex-col justify-between sm:h-full sm:grow sm:flex-row">
         <div className="flex h-[50%] flex-col justify-between sm:h-full sm:basis-3/5">
-          <div className="flex items-center gap-2 p-2 ">
-            <Avatar username={username} image={userImage} highlight size={45} />
-            <span className="font-bold text-gray-900">{username}</span>
-          </div>
+          <PostcardHeader username={username} userImage={userImage} id={post.id} />
           <div className="relative grow">
             <Image src={image} alt={`photo by ${username}`} priority fill sizes="650px" className="object-contain" />
           </div>
@@ -40,7 +38,7 @@ export default function PostDetail({ post }: Props) {
             {comments &&
               comments.map(({ image, username: commentUsername, comment }, index) => (
                 <li key={index} className="flex items-center gap-2">
-                  <Avatar image={image} size={40} highlight={commentUsername === username} username={username} />
+                  <Avatar image={image} size={45} highlight={commentUsername === username} username={username} />
                   <div className="flex flex-col justify-between">
                     <span className="text-sm font-bold">{commentUsername}</span>
                     <span className="text-sm">{comment}</span>
@@ -49,7 +47,12 @@ export default function PostDetail({ post }: Props) {
               ))}
             <div ref={endRef}></div>
           </ul>
-          <PostActionBar post={post} isModal={true} />
+          <PostActionBar post={post} isModal={true}>
+            <p>
+              <span className="mr-1 font-bold">{username}</span>
+              {text}
+            </p>
+          </PostActionBar>
         </div>
       </div>
     </section>

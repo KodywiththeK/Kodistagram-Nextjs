@@ -90,7 +90,7 @@ export default function CreateNewPost({ post }: Props) {
   return (
     <>
       {loading && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center bg-sky-500/20">
+        <div className="absolute inset-0 z-40 flex items-center justify-center bg-sky-500/20">
           <GridSpinner />
         </div>
       )}
