@@ -40,7 +40,7 @@ export default function Header() {
         <h1 className="text-2xl font-bold sm:text-3xl">Instagram</h1>
       </Link>
       <nav>
-        <ul className="flex items-center gap-3 p-2 pr-0 sm:gap-4 sm:p-4">
+        <ul className="flex items-center gap-2 p-2 pr-0 sm:gap-4 sm:p-4">
           {menu.map((item) => (
             <li key={item.href}>
               <Link href={item.href}>{pathname === item.href ? item.clickedIcon : item.icon}</Link>

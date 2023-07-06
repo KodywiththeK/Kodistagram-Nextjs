@@ -21,7 +21,6 @@ async function addComment(postId: string, comment: string) {
 export default function usePosts() {
   const { postsKey } = useCacheKeys()
   const { data: posts, isLoading: postLoading, error: postError, mutate } = useSWR<SimplePost[]>(postsKey)
-  console.log(postsKey)
 
   const setLike = useCallback(
     (post: SimplePost, username: string, like: boolean) => {
