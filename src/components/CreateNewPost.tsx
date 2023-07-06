@@ -3,13 +3,25 @@ import { convertToWebPFile } from '@/util/convertImageFormat'
 import imgCompression from '@/util/imgCompression'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { FormEvent, useRef, useState } from 'react'
+import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import GridSpinner from './ui/GridSpinner'
 import PhotoIcon from './ui/icons/PhotoIcon'
+import { SimplePost } from '@/model/post'
+import { urlToFileData } from '@/util/urlToFileData'
 
-export default function CreateNewPost() {
+type Props = { post?: SimplePost }
+
+export default function CreateNewPost({ post }: Props) {
+  useEffect(() => {
+    if (post) {
+      setUrl(post.image)
+      urlToFileData(post.image).then((res) => setFile(res))
+    }
+  }, [post])
   const [dragging, setDragging] = useState(false)
   const [file, setFile] = useState<File | Blob>()
+  const [url, setUrl] = useState<string>('')
+  console.log(file)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // rerendering방지
@@ -25,13 +37,14 @@ export default function CreateNewPost() {
     formData.append('file', file)
     formData.append('text', textRef?.current?.value ?? '')
 
-    fetch('/api/posts/', {
+    fetch(post ? `/api/posts/${post.id}` : '/api/posts/', {
       method: 'POST',
       body: formData,
     })
       .then((res) => {
         if (!res.ok) {
           setError(`${res.status} ${res.statusText}`)
+          console.log()
           return
         }
         router.push('/')
@@ -46,9 +59,8 @@ export default function CreateNewPost() {
     if (files && files[0]) {
       const optimizedImg = await imgCompression(files[0])
       const convertedImg = await convertToWebPFile(optimizedImg)
-
       setFile(convertedImg as Blob)
-      console.log(files[0])
+      setUrl(URL.createObjectURL(convertedImg as Blob))
     }
   }
   const handleDrag = (e: React.DragEvent<HTMLLabelElement>) => {
@@ -61,14 +73,17 @@ export default function CreateNewPost() {
   const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault()
   }
-  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDrop = async (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault()
     setDragging(false)
     //사용자가 이미지 파일을 드롭했는지 확인
     const files = e.dataTransfer?.files
     if (files && files[0]) {
-      setFile(files[0])
-      console.log(files[0])
+      const optimizedImg = await imgCompression(files[0])
+      const convertedImg = await convertToWebPFile(optimizedImg)
+
+      setFile(convertedImg as Blob)
+      setUrl(URL.createObjectURL(convertedImg as Blob))
     }
   }
 
@@ -89,7 +104,7 @@ export default function CreateNewPost() {
               <p className="text-sm text-neutral-500">Drop your image here or Click</p>
             </div>
           )}
-          {file && <Image src={URL.createObjectURL(file)} alt="local file" fill sizes="650px" className="object-cover" />}
+          {url && <Image src={url} alt="local file" fill sizes="650px" className="object-cover" />}
         </label>
         <input onChange={handleChange} type={'file'} id="input-file" className="hidden" accept="image/*" />
         <textarea ref={textRef} placeholder="Write a caption..." required className="aspect-video w-full max-w-[600px] rounded border-none p-2 text-[12px] shadow outline-none sm:text-sm" />

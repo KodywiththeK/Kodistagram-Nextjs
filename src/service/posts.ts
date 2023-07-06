@@ -1,4 +1,5 @@
 import { SimplePost } from '@/model/post'
+import { MdCommit } from 'react-icons/md'
 import { assetsURL, client, urlFor } from './sanity'
 
 const simplePostProjection = `
@@ -7,7 +8,7 @@ const simplePostProjection = `
   "userImage": author->image,
   "image": photo,
   "likes": likes[]->username,
-  "text": comments[0].comment,
+  "text": message,
   "comments": comments[],
   "commentCount": count(comments),
   "id": _id,
@@ -143,5 +144,52 @@ export async function createPost(userId: string, text: string, file: Blob) {
         },
         { autoGenerateArrayKeys: true }
       )
+    })
+}
+
+export async function deletePost(postId: string) {
+  return client
+    .delete({ query: `*[_type == "post" && _id == "${postId}"][0]` })
+    .then(() => {
+      console.log('The document matching *[_type == "post" && _id == "${postId}"][0] was deleted')
+    })
+    .catch((err) => {
+      console.error('Delete failed: ', err.message)
+    })
+}
+
+export async function EditPost(userId: string, text: string, file: Blob, postId: string) {
+  return fetch(assetsURL, {
+    method: 'POST',
+    headers: {
+      'content-type': file.type,
+      authorization: `Bearer ${process.env.SANITY_SECRET_TOKEN}`,
+    },
+    body: file,
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result)
+      return client
+        .patch(postId)
+        .set({
+          photo: { asset: { _ref: result.document._id } },
+        })
+        .commit()
+      // return client.createOrReplace(
+      //   {
+      //     _type: 'post',
+      //     _id: postId,
+      //     author: { _ref: userId },
+      //     photo: { asset: { _ref: result.document._id } },
+      //     comments: [
+      //       {
+      //         comment: text,
+      //         author: { _ref: userId, _type: 'reference' },
+      //       },
+      //     ],
+      //   },
+      //   { autoGenerateArrayKeys: true }
+      // )
     })
 }

@@ -27,6 +27,11 @@ export default {
       validation: (Rule) => Rule.unique(),
     },
     {
+      title: 'Message',
+      name: 'message',
+      type: 'string',
+    },
+    {
       title: 'Comments',
       name: 'comments',
       type: 'array',

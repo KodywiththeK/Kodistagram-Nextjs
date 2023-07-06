@@ -31,7 +31,7 @@ export default function PostDetail({ post }: Props) {
           </div>
         </div>
         <div className="flex h-[50%] w-full flex-col sm:h-full sm:basis-2/5 sm:justify-between ">
-          <ul className="flex flex-col gap-2 overflow-y-auto border-t border-gray-200 p-4 sm:mb-1 sm:border-none">
+          <ul className="flex h-full flex-col gap-2 overflow-y-auto border-t border-gray-200 p-4 sm:mb-1 sm:border-none">
             {isLoading && (
               <div className="mt-4 flex w-full justify-center">
                 <SyncLoader size={10} color="red" />

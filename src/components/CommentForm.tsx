@@ -1,9 +1,9 @@
 import usePosts from '@/hooks/posts'
 import useSinglePost from '@/hooks/singlePost'
-import { FullPost, SimplePost } from '@/model/post'
+import { SimplePost } from '@/model/post'
 import { useSession } from 'next-auth/react'
 import React, { useState } from 'react'
-import { BsEmojiSmile } from 'react-icons/bs'
+import PickEmoji from './PickEmoji'
 
 type Props = {
   post: SimplePost
@@ -30,8 +30,8 @@ export default function CommentForm({ post, isModal }: Props) {
   }
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="flex w-full items-center justify-between gap-2 border-t border-neutral-300 px-3 py-1">
-      <BsEmojiSmile size={18} />
+    <form onSubmit={(e) => handleSubmit(e)} className="relative flex w-full items-center justify-between gap-2 border-t border-neutral-300 px-3 py-1">
+      <PickEmoji text={comment} setText={setComment} />
       <input value={comment} required onChange={(e) => setComment(e.target.value)} className="shrink grow rounded p-2 outline-none" type={'text'} placeholder="Add a comment..." />
       <button disabled={comment.trim().length === 0} className="font-bold text-sky-500 disabled:text-sky-300">
         Post
