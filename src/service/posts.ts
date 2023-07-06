@@ -1,5 +1,4 @@
 import { SimplePost } from '@/model/post'
-import { MdCommit } from 'react-icons/md'
 import { assetsURL, client, urlFor } from './sanity'
 
 const simplePostProjection = `
@@ -134,12 +133,8 @@ export async function createPost(userId: string, text: string, file: Blob) {
           _type: 'post',
           author: { _ref: userId },
           photo: { asset: { _ref: result.document._id } },
-          comments: [
-            {
-              comment: text,
-              author: { _ref: userId, _type: 'reference' },
-            },
-          ],
+          comments: [],
+          message: text,
           likes: [],
         },
         { autoGenerateArrayKeys: true }
@@ -149,13 +144,19 @@ export async function createPost(userId: string, text: string, file: Blob) {
 
 export async function deletePost(postId: string) {
   return client
-    .delete({ query: `*[_type == "post" && _id == "${postId}"][0]` })
-    .then(() => {
-      console.log('The document matching *[_type == "post" && _id == "${postId}"][0] was deleted')
-    })
-    .catch((err) => {
-      console.error('Delete failed: ', err.message)
-    })
+    .patch({ query: `*[_type=="user"]` })
+    .unset([`bookmarks[_ref=="${postId}"]`])
+    .commit()
+    .then(() =>
+      client
+        .delete({ query: `*[_type == "post" && _id == "${postId}"][0]` })
+        .then(() => {
+          console.log('The document matching *[_type == "post" && _id == "${postId}"][0] was deleted')
+        })
+        .catch((err) => {
+          console.error('Delete failed: ', err.message)
+        })
+    )
 }
 
 export async function EditPost(text: string, file: Blob, postId: string) {

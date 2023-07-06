@@ -1,4 +1,5 @@
 import { deletePost } from '@/service/posts'
+import { client } from '@/service/sanity'
 import { isSessionExist } from '@/util/session'
 import { NextRequest, NextResponse } from 'next/server'
 

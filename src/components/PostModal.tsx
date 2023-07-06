@@ -9,10 +9,11 @@ type Props = {
 export default function PostModal({ onClose, children }: Props) {
   return (
     <section className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-neutral-900/60" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <button onClick={onClose} className="fixed right-8 top-8 p-2 opacity-100">
-        <AiOutlineClose color="white" size={24} />
+      <button onClick={onClose} className="fixed right-[55px] top-[14px] z-20 flex items-center rounded-lg border border-gray-300 bg-white px-2 py-1.5 opacity-100 shadow sm:right-8 sm:top-8 sm:bg-gray-700/50 sm:text-white">
+        {'Close '}
+        <AiOutlineClose size={22} />
       </button>
-      <div className="sm:3/5 relative h-4/5 w-4/5 max-w-7xl rounded bg-white py-2">{children}</div>
+      <div className="relative h-full w-full max-w-7xl bg-white/90 py-2 sm:h-4/5 sm:rounded md:w-4/5 lg:w-3/5">{children}</div>
     </section>
   )
 }

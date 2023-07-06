@@ -41,7 +41,7 @@ export default function PostToggleButton({ username, buttons }: Props) {
     <div ref={containerRef}>
       {username === data?.user.username && <BsThreeDots size={22} onClick={handleToggleActions} className=" box-content cursor-pointer p-4" />}
       {showActions && (
-        <div className="absolute right-2 top-10 z-10 mt-2 w-[100px] overflow-hidden rounded-lg border-[0.5px] border-gray-300 bg-white shadow-xl">
+        <div className="absolute right-2 top-12 z-10 mt-2 w-[100px] overflow-hidden rounded-lg border-[0.5px] border-gray-300 bg-white shadow-xl">
           {buttons.map(({ name, onClick }) => (
             <button
               key={name}

@@ -31,12 +31,12 @@ export default function PickEmoji({ text, setText }: Props) {
   }
 
   return (
-    <div ref={emojiRef} className="flex items-center justify-center">
+    <div ref={emojiRef} className=" hidden items-center justify-center sm:flex">
       <button onClick={(e) => handleEmojiPicker(e)} className="box-content px-1 py-2">
         <BsEmojiSmile size={18} />
       </button>
       {showEmoji && (
-        <div className="absolute bottom-12 left-0">
+        <div className="absolute bottom-12 left-0 ">
           <EmojiPicker width={'300px'} onEmojiClick={handleEmojiClick} />
         </div>
       )}

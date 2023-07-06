@@ -55,7 +55,7 @@ export default function useUserInfo() {
       return mutate(updateFollow(otherUserId, follow), {
         optimisticData: newUserInfo,
         populateCache: false,
-        revalidate: true,
+        revalidate: false,
         rollbackOnError: true,
       })
     },

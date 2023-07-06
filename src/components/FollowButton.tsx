@@ -22,6 +22,7 @@ export default function FollowButton({ user }: Props) {
   const [isPending, startTransition] = useTransition()
   const [isFetching, setIsFetching] = useState(false)
   const isUpdating = isPending || isFetching
+  console.log(LoggedInUser)
 
   const handleFollow = async () => {
     if (LoggedInUser) {
