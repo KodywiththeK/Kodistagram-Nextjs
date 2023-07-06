@@ -1,8 +1,6 @@
 import { createPost, getFollowingPosts } from '@/service/posts'
 import { isSessionExist } from '@/util/session'
-import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
-import { authOptions } from '../auth/[...nextauth]/route'
 
 export async function GET() {
   return isSessionExist(async (user) => {
