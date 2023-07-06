@@ -5,8 +5,8 @@ import SocialSigninButton from '@/components/SocialSigninButton'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Signin',
-  description: 'Signup or Login to InstagramKody',
+  title: 'Kodistagram',
+  description: 'Signup or Login to Kodistagram',
 }
 
 type Props = {

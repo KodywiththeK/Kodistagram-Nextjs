@@ -9,10 +9,10 @@ const openSans = Open_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    default: 'InstagramKody',
-    template: 'InstagramKody | %s',
+    default: 'Kodistagram',
+    template: 'Kodistagram | %s',
   },
-  description: 'InstagramKody Photos',
+  description: 'Kodistagram Photos',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

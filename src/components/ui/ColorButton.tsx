@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 type Props = {
-  text: string
+  text: ReactElement | string
   onClick: () => void
 }
 

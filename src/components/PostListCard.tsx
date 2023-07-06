@@ -7,6 +7,7 @@ import ModalPortal from './ui/ModalPortal'
 import PostModal from './PostModal'
 import PostDetail from './PostDetail'
 import PostcardHeader from './PostcardHeader'
+import { useSession } from 'next-auth/react'
 
 type Props = {
   post: SimplePost
@@ -16,6 +17,7 @@ type Props = {
 export default function PostListCard({ post, priority = false }: Props) {
   const { userImage, username, image, text, commentCount } = post
   const [openModal, setOpenModal] = useState(false)
+  const { data } = useSession()
 
   return (
     <article className=" max-w-lg rounded border border-gray-200 shadow-lg">
@@ -30,7 +32,7 @@ export default function PostListCard({ post, priority = false }: Props) {
       </PostActionBar>
       {openModal && (
         <ModalPortal>
-          <PostModal onClose={() => setOpenModal(false)}>
+          <PostModal onClose={() => setOpenModal(false)} isAuthor={username === data?.user.username}>
             <PostDetail post={post} />
           </PostModal>
         </ModalPortal>

@@ -20,16 +20,13 @@ export default function PostGridCard({ post, priority = false }: Props) {
     if (!session?.user) return signIn()
     setOpenModal(true)
   }
-  // const { posts } = usePosts()
-  // console.log(posts)
-  // const data = posts?.find((p) => p.id == id)
 
   return (
     <div className="relative aspect-square w-full">
       <Image src={image} alt={`photo by ${username}`} width={650} height={650} priority={priority} className="aspect-square cursor-pointer object-cover" onClick={() => handleOpenPost()} />
       {openModal && (
         <ModalPortal>
-          <PostModal onClose={() => setOpenModal(false)}>
+          <PostModal onClose={() => setOpenModal(false)} isAuthor={username === session?.user.username}>
             <PostDetail post={post} />
           </PostModal>
         </ModalPortal>

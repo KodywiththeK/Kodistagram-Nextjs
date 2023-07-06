@@ -11,6 +11,7 @@ import NewOutlineIcon from './ui/icons/NewOutlineIcon'
 import ColorButton from './ui/ColorButton'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import Avatar from './Avatar'
+import { AiOutlineLogin, AiOutlineLogout } from 'react-icons/ai'
 
 const menu = [
   {
@@ -37,7 +38,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-30 mx-auto flex w-full max-w-screen-xl items-center justify-between rounded border-b border-b-gray-300 bg-white px-2 pt-4 shadow-sm sm:pt-2">
       <Link href={'/'}>
-        <h1 className="text-2xl font-bold sm:text-3xl">Instagram</h1>
+        <h1 className="text-[22px] font-bold sm:text-3xl">Kodistagram</h1>
       </Link>
       <nav>
         <ul className="flex items-center gap-2 p-2 pr-0 sm:gap-4 sm:p-4">
@@ -49,11 +50,16 @@ export default function Header() {
           {session ? (
             <li className="flex items-center gap-2 sm:gap-3">
               <Avatar username={session.user.username} image={session.user.image} size={40} highlight={true} />
-              <ColorButton text="Sign out" onClick={() => signOut()} />
+              <ColorButton
+                text={<AiOutlineLogout size={16} />}
+                onClick={() => {
+                  confirm('로그아웃 하시겠습니까?') && signOut()
+                }}
+              />
             </li>
           ) : (
             <li>
-              <ColorButton text="Sign in" onClick={() => signIn()} />
+              <ColorButton text={<AiOutlineLogin size={16} />} onClick={() => signIn()} />
             </li>
           )}
         </ul>
