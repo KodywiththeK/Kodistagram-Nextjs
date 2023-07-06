@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 import { authOptions } from '../api/auth/[...nextauth]/route'
 
-export const metatdata: Metadata = {
+export const metadata: Metadata = {
   title: 'New Post',
   description: 'Create a new post',
 }
