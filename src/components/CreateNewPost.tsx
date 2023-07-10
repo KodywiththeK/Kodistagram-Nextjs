@@ -21,7 +21,6 @@ export default function CreateNewPost({ post }: Props) {
   const [dragging, setDragging] = useState(false)
   const [file, setFile] = useState<File | Blob>()
   const [url, setUrl] = useState<string>('')
-  console.log(file)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // rerendering방지

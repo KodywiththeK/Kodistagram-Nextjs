@@ -60,7 +60,7 @@ export default {
 
   preview: {
     select: {
-      title: 'comments.0.comment',
+      title: 'message',
       authorName: 'author.name',
       authorUsername: 'author.username',
       media: 'photo',
